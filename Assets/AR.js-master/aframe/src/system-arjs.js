@@ -6,7 +6,7 @@ AFRAME.registerSystem('arjs', {
         },
         debugUIEnabled: {
             type: 'boolean',
-            default: false,
+            default: true,
         },
         areaLearningButton: {
             type: 'boolean',
@@ -15,15 +15,6 @@ AFRAME.registerSystem('arjs', {
         performanceProfile: {
             type: 'string',
             default: 'default',
-        },
-        labelingMode: {
-            type: 'string',
-            default: '',
-        },
-        // new video texture mode (location based only)
-        videoTexture: {
-            type: 'boolean',
-            default: false
         },
         // old parameters
         debug: {
@@ -41,6 +32,10 @@ AFRAME.registerSystem('arjs', {
         patternRatio: {
             type: 'number',
             default: -1,
+        },
+        labelingMode: {
+            type: 'string',
+            default: '',
         },
         cameraParametersUrl: {
             type: 'string',
@@ -92,16 +87,11 @@ AFRAME.registerSystem('arjs', {
     //		Code Separator
     //////////////////////////////////////////////////////////////////////////////
 
+
     init: function () {
         var _this = this
 
-        // If videoTexture is set, skip the remainder of the setup entirely and just use the arjs-webcam-texture component
-        if(this.data.videoTexture === true && this.data.sourceType === 'webcam') {
-            var webcamEntity = document.createElement("a-entity");
-            webcamEntity.setAttribute("arjs-webcam-texture", true);
-            this.el.sceneEl.appendChild(webcamEntity);
-            return;
-        } 
+
         //////////////////////////////////////////////////////////////////////////////
         //		setup arProfile
         //////////////////////////////////////////////////////////////////////////////
@@ -110,6 +100,8 @@ AFRAME.registerSystem('arjs', {
             .trackingMethod(this.data.trackingMethod)
             .performance(this.data.performanceProfile)
             .defaultMarker()
+
+
 
         //////////////////////////////////////////////////////////////////////////////
         //		honor this.data and setup arProfile with it
@@ -188,6 +180,7 @@ AFRAME.registerSystem('arjs', {
                 }
             }
 
+
             //////////////////////////////////////////////////////////////////////////////
             //		honor .debugUIEnabled
             //////////////////////////////////////////////////////////////////////////////
@@ -224,9 +217,13 @@ AFRAME.registerSystem('arjs', {
         }, 1000 / 30)
     },
 
-    tick: function () {
+    tick: function (now, delta) {
+        var _this = this
+
         // skip it if not yet isInitialised
-        if (this.isReady === false || this.data.videoTexture === true) return
+        if (this.isReady === false) return
+
+        var arSession = this._arSession
 
         // update arSession
         this._arSession.update()

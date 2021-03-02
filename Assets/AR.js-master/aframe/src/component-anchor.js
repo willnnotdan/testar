@@ -113,9 +113,10 @@ AFRAME.registerComponent('arjs-anchor', {
                 markerParameters.type = _this.data.type
                 markerParameters.patternUrl = _this.data.patternUrl;
                 markerParameters.markersAreaEnabled = false
+            } else {
+                // console.assert( this.data.preset === '', 'illegal preset value '+this.data.preset)
             }
 
-            markerParameters.minConfidence = _this.data.minCondidence;
             markerParameters.smooth = _this.data.smooth;
             markerParameters.smoothCount = _this.data.smoothCount;
             markerParameters.smoothTolerance = _this.data.smoothTolerance;
@@ -188,6 +189,8 @@ AFRAME.registerComponent('arjs-anchor', {
         } else if (_this._arAnchor.object3d.visible === false && wasVisible === true) {
             _this.el.emit('markerLost')
         }
+
+
     }
 })
 
@@ -217,6 +220,8 @@ AFRAME.registerPrimitive('a-anchor', AFRAME.utils.extendDeep({}, AFRAME.primitiv
         'hit-testing-enabled': 'arjs-hit-testing.enabled',
     }
 }))
+
+
 
 AFRAME.registerPrimitive('a-camera-static', AFRAME.utils.extendDeep({}, AFRAME.primitives.getMeshMixin(), {
     defaultComponents: {

@@ -10,13 +10,8 @@ AFRAME.registerComponent('gps-entity-place', {
             default: 0,
         }
     },
-    remove: function() {
-        // cleaning listeners when the entity is removed from the DOM
-        window.removeEventListener('gps-camera-origin-coord-set', this.coordSetListener);
-        window.removeEventListener('gps-camera-update-position', this.updatePositionListener);
-    },
-    init: function() {
-        this.coordSetListener = () => {
+    init: function () {
+        window.addEventListener('gps-camera-origin-coord-set', function () {
             if (!this._cameraGps) {
                 var camera = document.querySelector('[gps-camera]');
                 if (!camera.components['gps-camera']) {
@@ -25,10 +20,11 @@ AFRAME.registerComponent('gps-entity-place', {
                 }
                 this._cameraGps = camera.components['gps-camera'];
             }
-            this._updatePosition();
-        };
 
-        this.updatePositionListener = (ev) => {
+            this._updatePosition();
+        }.bind(this));
+
+        window.addEventListener('gps-camera-update-position', function (ev) {
             if (!this.data || !this._cameraGps) {
                 return;
             }
@@ -39,45 +35,33 @@ AFRAME.registerComponent('gps-entity-place', {
             };
 
             // it's actually a 'distance place', but we don't call it with last param, because we want to retrieve distance even if it's < minDistance property
-            var distanceForMsg = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords);
+            var distance = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords);
 
-            this.el.setAttribute('distance', distanceForMsg);
-            this.el.setAttribute('distanceMsg', formatDistance(distanceForMsg));
-            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distanceForMsg } }));
-
-            var actualDistance = this._cameraGps.computeDistanceMeters(ev.detail.position, dstCoords, true);
-
-            if (actualDistance === Number.MAX_SAFE_INTEGER) {
-                this.hideForMinDistance(this.el, true);
-            } else {
-                this.hideForMinDistance(this.el, false);
-            }
-        };
-
-        window.addEventListener('gps-camera-origin-coord-set', this.coordSetListener);
-        window.addEventListener('gps-camera-update-position', this.updatePositionListener);
+            this.el.setAttribute('distance', distance);
+            this.el.setAttribute('distanceMsg', formatDistance(distance));
+            this.el.dispatchEvent(new CustomEvent('gps-entity-place-update-positon', { detail: { distance: distance } }));
+        }.bind(this));
 
         this._positionXDebug = 0;
 
-        window.dispatchEvent(new CustomEvent('gps-entity-place-added', { detail: { component: this.el } }));
+        window.dispatchEvent(new CustomEvent('gps-entity-place-added'));
+        console.debug('gps-entity-place-added');
+
+        this.debugUIAddedHandler = function () {
+            this.setDebugData(this.el);
+            window.removeEventListener('debug-ui-added', this.debugUIAddedHandler.bind(this));
+        };
+
+        window.addEventListener('debug-ui-added', this.debugUIAddedHandler.bind(this));
     },
-    /**
-     * Hide entity according to minDistance property
-     * @returns {void}
-     */
-    hideForMinDistance: function(el, hideEntity) {
-        if (hideEntity) {
-            el.setAttribute('visible', 'false');
-        } else {
-            el.setAttribute('visible', 'true');
-        }
-    },
+
     /**
      * Update place position
      * @returns {void}
      */
-    _updatePosition: function() {
+    _updatePosition: function () {
         var position = { x: 0, y: this.el.getAttribute('position').y || 0, z: 0 }
+        var hideEntity = false;
 
         // update position.x
         var dstCoords = {
@@ -85,7 +69,12 @@ AFRAME.registerComponent('gps-entity-place', {
             latitude: this._cameraGps.originCoords.latitude,
         };
 
-        position.x = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords);
+        position.x = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords, true);
+
+        // place has to be hide
+        if (position.x === Number.MAX_SAFE_INTEGER) {
+            hideEntity = true;
+        }
 
         this._positionXDebug = position.x;
 
@@ -97,17 +86,41 @@ AFRAME.registerComponent('gps-entity-place', {
             latitude: this.data.latitude,
         };
 
-        position.z = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords);
+        position.z = this._cameraGps.computeDistanceMeters(this._cameraGps.originCoords, dstCoords, true);
+
+        // place has to be hide
+        if (position.z === Number.MAX_SAFE_INTEGER) {
+            hideEntity = true;
+        }
 
         position.z *= this.data.latitude > this._cameraGps.originCoords.latitude ? -1 : 1;
 
         if (position.y !== 0) {
-            var altitude = this._cameraGps.originCoords.altitude !== undefined ? this._cameraGps.originCoords.altitude : 0;
-            position.y = position.y - altitude;
+            position.y = position.y - this._cameraGps.originCoords.altitude;
+        }
+
+        if (hideEntity) {
+            this.el.setAttribute('visible', false);
+        } else {
+            this.el.setAttribute('visible', true);
         }
 
         // update element's position in 3D world
         this.el.setAttribute('position', position);
+    },
+
+    /**
+     * Set places distances from user on debug UI
+     * @returns {void}
+     */
+    setDebugData: function (element) {
+        var elements = document.querySelectorAll('.debug-distance');
+        elements.forEach(function (el) {
+            var distance = formatDistance(this._positionXDebug);
+            if (element.getAttribute('value') == el.getAttribute('value')) {
+                el.innerHTML = el.getAttribute('value') + ': ' + distance + 'far';
+            }
+        });
     },
 });
 
