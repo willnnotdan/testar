@@ -72,7 +72,13 @@
     <Compile Include="Assets\ARjs_Unity\Scripts\CustomModelHelper.cs" />
     <Compile Include="Assets\ARjs_Unity\Scripts\ImageTarget.cs" />
     <Compile Include="Assets\ARjs_Unity\Scripts\KeyFrameList.cs" />
+    <None Include="Assets\AR.js-master\LICENSE.txt" />
     <None Include="Assets\AR.js-master\three.js\vendor\jsartoolkit5\LICENSE.txt" />
+    <None Include="Assets\AR.js-master\aframe\demos\demo-hatsune-miku\models\vmds\readme.txt" />
+    <None Include="Assets\AR.js-master\aframe\demos\demo-hatsune-miku\models\vmds\readme_wavefile_camera.txt" />
+    <None Include="Assets\AR.js-master\aframe\demos\demo-hatsune-miku\models\miku\readme_miku_v2.txt" />
+    <None Include="Assets\AR.js-master\aframe\demos\demo-hatsune-miku\models\miku\readme.txt" />
+    <None Include="Assets\AR.js-master\aframe\demos\demo-hatsune-miku\models\vmds\readme_wavefile.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/williambuswell-campbell/Dev/ARTest/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

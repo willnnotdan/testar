@@ -1,18 +1,16 @@
 # How To Release ?
 
-```bash
-# Update following files:
-CHANGELOG.md
-three.js/src/threex/threex-artoolkitcontext.js
-three.js/src/threex/threex-artoolkitcontext-nft.js
-package.json
-README.md
+This one is mainly for [me](@jerome_etienne) to remember :)
 
-# Build everything - aka a-frame and three.js
-make build
-cd aframe
-make build-location-only
-cd ..
+```bash
+# Update CHANGELOG.md - remove the -dev into version
+atom CHANGELOG.md
+
+# replace REVISION to the proper version, search/replace on the version string should do it
+atom three.js/src/threex/threex-artoolkitcontext.js package.json README.md
+
+# Rebuild and minify everything - aka a-frame and three.js
+make minify
 
 # Commit everything
 git add . && git commit -a -m 'Last commit before release' && git push
@@ -24,7 +22,7 @@ git checkout master
 git merge dev
 
 # tag the release
-git tag <tag>
+git tag 1.5.5
 
 # push the tag on github
 git push origin --tags
@@ -32,12 +30,14 @@ git push origin --tags
 # push commits tag on github
 git push
 
-# publish on NPM (only if have proper credentials)
+# update npm package.json
 npm publish
 
 # Come back to dev branch
 git checkout dev
 
+# Update CHANGELOG.md - start new dev version
+atom CHANGELOG.md
 
 # update the a-frame codepen if needed
 open "https://codepen.io/jeromeetienne/pen/mRqqzb?editors=1000#0"
