@@ -8,7 +8,7 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
 
     // handle default parameters
     this.parameters = {
-        // AR backend - ['artoolkit', 'aruco']
+        // AR backend - ['artoolkit']
         trackingBackend: 'artoolkit',
         // debug - true if one should display artoolkit debug canvas, false otherwise
         debug: false,
@@ -18,7 +18,7 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
         matrixCodeType: '3x3',
 
         // url of the camera parameters
-        cameraParametersUrl: ARjs.Context.baseURL + 'parameters/camera_para.dat',
+        cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
 
         // tune the maximum rate of pose detection in the source image
         maxDetectionRate: 60,
@@ -29,21 +29,15 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
         // the patternRatio inside the artoolkit marker - artoolkit only
         patternRatio: 0.5,
 
-        // Labeling mode for markers - ['black_region', 'white_region']
-        // black_region: Black bordered markers on a white background, white_region: White bordered markers on a black background
-        labelingMode: 'black_region',
-
         // enable image smoothing or not for canvas copy - default to true
         // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
         imageSmoothingEnabled: false,
     }
     // parameters sanity check
-    console.assert(['artoolkit', 'aruco'].indexOf(this.parameters.trackingBackend) !== -1, 'invalid parameter trackingBackend', this.parameters.trackingBackend)
+    console.assert(['artoolkit'].indexOf(this.parameters.trackingBackend) !== -1, 'invalid parameter trackingBackend', this.parameters.trackingBackend)
     console.assert(['color', 'color_and_matrix', 'mono', 'mono_and_matrix'].indexOf(this.parameters.detectionMode) !== -1, 'invalid parameter detectionMode', this.parameters.detectionMode)
-    console.assert(["black_region", "white_region"].indexOf(this.parameters.labelingMode) !== -1, "invalid parameter labelingMode", this.parameters.labelingMode);
 
     this.arController = null;
-    this.arucoContext = null;
 
     _this.initialized = false
 
@@ -78,10 +72,9 @@ ARjs.Context = THREEx.ArToolkitContext = function (parameters) {
 
 Object.assign(ARjs.Context.prototype, THREE.EventDispatcher.prototype);
 
-// ARjs.Context.baseURL = '../'
 // default to github page
-ARjs.Context.baseURL = 'https://jeromeetienne.github.io/AR.js/three.js/'
-ARjs.Context.REVISION = '2.2.2';
+ARjs.Context.baseURL = 'https://ar-js-org.github.io/AR.js/three.js/'
+ARjs.Context.REVISION = '3.3.1';
 
 /**
  * Create a default camera for this trackingBackend
@@ -93,9 +86,7 @@ ARjs.Context.createDefaultCamera = function (trackingBackend) {
     // Create a camera
     if (trackingBackend === 'artoolkit') {
         var camera = new THREE.Camera();
-    } else if (trackingBackend === 'aruco') {
-        var camera = new THREE.PerspectiveCamera(42, renderer.domElement.width / renderer.domElement.height, 0.01, 100);
-    } else console.assert(false)
+    } else console.assert(false);
     return camera
 }
 
@@ -106,10 +97,8 @@ ARjs.Context.createDefaultCamera = function (trackingBackend) {
 ARjs.Context.prototype.init = function (onCompleted) {
     var _this = this
     if (this.parameters.trackingBackend === 'artoolkit') {
-        this._initArtoolkit(done)
-    } else if (this.parameters.trackingBackend === 'aruco') {
-        this._initAruco(done)
-    } else console.assert(false)
+        this._initArtoolkit(done);
+    } else console.assert(false);
     return
 
     function done() {
@@ -146,11 +135,9 @@ ARjs.Context.prototype.update = function (srcElement) {
 
     // process this frame
     if (this.parameters.trackingBackend === 'artoolkit') {
-        this._updateArtoolkit(srcElement)
-    } else if (this.parameters.trackingBackend === 'aruco') {
-        this._updateAruco(srcElement)
+        this._updateArtoolkit(srcElement);
     }  else {
-        console.assert(false)
+        console.assert(false);
     }
 
     // dispatch event
@@ -239,15 +226,6 @@ ARjs.Context.prototype._initArtoolkit = function (onCompleted) {
         // set the patternRatio for artoolkit
         arController.setPattRatio(_this.parameters.patternRatio);
 
-        // set the labelingMode for artoolkit
-        var labelingModeTypes = {
-            "black_region": artoolkit.AR_LABELING_BLACK_REGION,
-            "white_region": artoolkit.AR_LABELING_WHITE_REGION
-        }
-        var labelingModeType = labelingModeTypes[_this.parameters.labelingMode];
-        console.assert(labelingModeType !== undefined);
-        arController.setLabelingMode(labelingModeType);
-
         // set thresholding in artoolkit
         // this seems to be the default
         // arController.setThresholdMode(artoolkit.AR_LABELING_THRESH_MODE_MANUAL)
@@ -285,53 +263,4 @@ ARjs.Context.prototype.getProjectionMatrix = function (srcElement) {
 
 ARjs.Context.prototype._updateArtoolkit = function (srcElement) {
     this.arController.process(srcElement)
-}
-
-//////////////////////////////////////////////////////////////////////////////
-//		aruco specific
-//////////////////////////////////////////////////////////////////////////////
-ARjs.Context.prototype._initAruco = function (onCompleted) {
-    this.arucoContext = new THREEx.ArucoContext()
-
-    // honor this.parameters.canvasWidth/.canvasHeight
-    this.arucoContext.canvas.width = this.parameters.canvasWidth
-    this.arucoContext.canvas.height = this.parameters.canvasHeight
-
-    // honor this.parameters.imageSmoothingEnabled
-    var context = this.arucoContext.canvas.getContext('2d')
-    // context.mozImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
-    context.webkitImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
-    context.msImageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
-    context.imageSmoothingEnabled = this.parameters.imageSmoothingEnabled;
-
-
-    setTimeout(function () {
-        onCompleted()
-    }, 0)
-}
-
-
-ARjs.Context.prototype._updateAruco = function (srcElement) {
-    // console.log('update aruco here')
-    var _this = this
-    var arMarkersControls = this._arMarkersControls
-    var detectedMarkers = this.arucoContext.detect(srcElement)
-
-    detectedMarkers.forEach(function (detectedMarker) {
-        var foundControls = null
-        for (var i = 0; i < arMarkersControls.length; i++) {
-            console.assert(arMarkersControls[i].parameters.type === 'barcode')
-            if (arMarkersControls[i].parameters.barcodeValue === detectedMarker.id) {
-                foundControls = arMarkersControls[i]
-                break;
-            }
-        }
-        if (foundControls === null) return
-
-        var tmpObject3d = new THREE.Object3D
-        _this.arucoContext.updateObject3D(tmpObject3d, foundControls._arucoPosit, foundControls.parameters.size, detectedMarker);
-        tmpObject3d.updateMatrix()
-
-        foundControls.updateWithModelViewMatrix(tmpObject3d.matrix)
-    })
 }

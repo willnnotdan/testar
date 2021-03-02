@@ -1,3 +1,70 @@
+# 3.3.1
+
+- Fix minor location-based bugs
+
+# 3.3.0
+
+- Fix shaking of far/near entities on location-based using new configurable properties (thanks to @nickw1)
+
+# 3.2.1
+
+- show camera error alert after dispatching `camera-error` event
+
+# 3.2.0
+
+- support arbitrarily distant places on location-based (thanks to @nickw1, see PR #119)
+- minor bug fixes
+
+# 3.1.0
+
+- added new, alternative version for `location-based` using a projected camera based on Spherical Mercator. For this purpose we introduce two new aframe components: `gps-projected-camera` and `gps-projected-entity-place` (thanks to @nickw1)
+- added video stop on marker being lost (nft-video example)
+- fixed rotation bug on X axis see issue #59, restored shift position on y instead of z
+- removed links to old repository in the examples
+- added `maxDistance` property on location-based
+- new `arjs-nft-loaded` event listener for **NFT** markers, dispatched when all **NFT** markers are loaded see PR #98 and issue #97
+
+# 3.0.2
+
+- update documentation using latest aframe version on every example
+
+# 3.0.1
+
+- fixed `minDistance` property updating on location based
+- enhanced Image tracking examples
+
+# 3.0.0
+
+- fix minor Readme paths/typos
+
+# 3.0.0-beta-3
+
+- cleaned location based examples
+- removed `gps-camera-debug` component
+- enhanced Custom Events payloads
+
+# 3.0.0-beta-2
+
+- Fixed some path issues to make NFT work with remote sites
+- Updated HOW_TO_RELEASE.md for new structure
+
+# 3.0.0-beta
+
+- Added Image Tracking (NFT) support
+- New structure: 2 alternative versions (A-Frame/Three.js image tracking+location based, A-Frame/Three.js markers+location based)
+- Added a Web Worker for Image Tracking performances (as Blob object to be used cross-domain)
+- New examples structure, divided by features
+- Added examples for Image Tracking
+- Removed minified versions
+- Removed UglifyJS dependency
+- ES6 support
+- Move to new organization
+- Move to new repository
+- Change package.json info
+- Cleaned code from some examples/experiments
+- Removed obsolete code of Aruco markers and Google Tango
+- Reduced repository size by ~36%
+
 # 2.2.2
 
 - Restored old camera constraints, was giving better performances for some devices but worst for others.

@@ -151,9 +151,12 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
 
     // init default value
     onError = onError || function (error) {
-        alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
         var event = new CustomEvent('camera-error', { error: error });
         window.dispatchEvent(event);
+
+        setTimeout(() => {
+            alert('Webcam Error\nName: ' + error.name + '\nMessage: ' + error.message)
+        }, 1000);
     }
 
     var domElement = document.createElement('video');
@@ -186,9 +189,13 @@ ARjs.Source.prototype._initSourceWebcam = function (onReady, onError) {
                 facingMode: 'environment',
                 width: {
                     ideal: _this.parameters.sourceWidth,
+                    // min: 1024,
+                    // max: 1920
                 },
                 height: {
                     ideal: _this.parameters.sourceHeight,
+                    // min: 776,
+                    // max: 1080
                 }
             }
         };
@@ -406,11 +413,6 @@ ARjs.Source.prototype.onResize = function (arToolkitContext, renderer, camera) {
         if (arToolkitContext.arController !== null) {
             this.copyElementSizeTo(arToolkitContext.arController.canvas)
         }
-    } else if (trackingBackend === 'aruco') {
-        this.onResizeElement()
-        this.copyElementSizeTo(renderer.domElement)
-
-        this.copyElementSizeTo(arToolkitContext.arucoContext.canvas)
     } else console.assert(false, 'unhandled trackingBackend ' + trackingBackend)
 
 
@@ -419,8 +421,5 @@ ARjs.Source.prototype.onResize = function (arToolkitContext, renderer, camera) {
         if (arToolkitContext.arController !== null) {
             camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
         }
-    } else if (trackingBackend === 'aruco') {
-        camera.aspect = renderer.domElement.width / renderer.domElement.height;
-        camera.updateProjectionMatrix();
     } else console.assert(false, 'unhandled trackingBackend ' + trackingBackend)
 }

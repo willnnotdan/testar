@@ -1,64 +1,241 @@
-# AR.js - Augmented Reality for the Web
 
-<img src="https://github.com/jeromeetienne/AR.js/blob/master/AR.js-1920-1080-HD.png?raw=true" height="200" />
+# AR.js - Augmented Reality on the Web
 
-Logo by [Simon Poulter](https://twitter.com/viralinfo)
+<a href="https://xscode.com/nicolocarpignoli/AR.js">
+  <img src="./AR-JS-banner.png" />
+</a>
 
 ---
 
-[![npm](https://img.shields.io/npm/v/ar.js.svg)](https://www.npmjs.com/package/ar.js)
-[![npm](https://img.shields.io/npm/dt/ar.js.svg)](https://www.npmjs.com/package/ar.js)
 [![Build Status](https://travis-ci.org/jeromeetienne/AR.js.svg?branch=master)](https://travis-ci.org/jeromeetienne/AR.js)
-<br class="badge-separator" />
 [![Gitter chat](https://badges.gitter.im/AR-js/Lobby.png)](https://gitter.im/AR-js/Lobby)
-<span class="badge-patreon"><a href="https://patreon.com/jerome_etienne" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
 [![Twitter Follow](https://img.shields.io/twitter/follow/nicolocarp.svg?style=plastic&label=nicolocarpignoli-twitter&style=plastic)](https://twitter.com/nicolocarp)
 [![Twitter Follow](https://img.shields.io/twitter/follow/jerome_etienne.svg?style=plastic&label=jeromeetienne-twitter&style=plastic)](https://twitter.com/jerome_etienne)
 
-AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Marker based and Location based AR.
+AR.js is a lightweight library for Augmented Reality on the Web, coming with features like Image Tracking, Location-based AR and Marker tracking.
 
-# ⚠️ This project repository has been moved to a Github organization account ⚠️
+Welcome to the official repository!
 
-## You can find the maintened version of AR.js at [this link](https://github.com/AR-js-org/AR.js).
+This project has been created by [@jeromeetienne](https://github.com/jeromeetienne) and it is now maintained by [@nicolocarpignoli](https://github.com/nicolocarpignoli).
 
-The old repository (the one you are now) will be left up, so all links and CDNs will continue to be available, but this version **will not be updated anymore**.
+🚀For frequent updates on AR.js you can follow [@nicolocarp](https://twitter.com/nicolocarp) and Watch this repo!
 
-**⚠️ AR.js repository has been moved, please check it out at: https://github.com/AR-js-org/AR.js ⚠️**
+Logo is courtesy of <a href="https://twitter.com/viralinfo"> Simon Poulter </a>.
 
-Please, open issues and Pull Requests on the new repository:
-https://github.com/AR-js-org/AR.js
+------
 
-Thank you.
+<h2>You can get paid support and new features for AR.js. Check <a href="https://xscode.com/nicolocarpignoli/AR.js"> this link. </a></h2>
 
-## Why move AR.js
-
-AR.js was among those great projects, with great technologies, often disruptive ones, that eventually were lacking from documentation and support.
-
-We tried to carry on the author's terrific work by maintaining this project, handling new versions, issues, pull requests, the community itself. We continued promoting this project through blogs, Medium articles, socials. And we released new features, like the Location Based AR that was not initially present on AR.js.
-
-Now, that we are also ready to ship a new feature, Image Tracking, we feel ready to start a new path, and so we have created a new repository that is not owned by individuals, but by one organization.
-
-Anyone can be added to it, and more people will manage it, in order to make the project more collaborative and avoid "bottlenecks".
-
-We feel this is a new chapter for this project, to not let it die alone. We feel the current Web Augmented Reality market really needed something like AR.js, but only if owned by no-one apart from the community itself. A technology free and Open Source, created by users for the users.
-
-We'd like to thank all contributors and passionate people who help us in this journey.
-
-On the new repository, you will find all the feature you already had here, plus:
-
-- Image Tracking feature
-- more examples to learn by doing
-- a new, contributive place to get started
-- a new Documentation.
-
-See you on new [AR.js org](https://github.com/AR-js-org).
-
-*Nicolò Carpignoli*
-
-_____
-
-AR.js is a free and Open Source software, created by [@jeromeetienne](https://github.com/jeromeetienne) and maintained by [@nicolocarpignoli](https://github.com/nicolocarpignoli). Check the LICENSE.txt to learn more.
+------
 
 
+### ⚡️AR.js has now an official Documentation!⚡️
+### Check it out: [AR.js Official Documentation](https://ar-js-org.github.io/AR.js-Docs/).
 
+If you want to give a first look at AR.js potential, you can continue with this Readme.
+
+-----
+
+
+⚡️ AR.js is coming in two, different builds. They are both maintained. They are exclusive.
+
+Please import the one you need for your project, not both:
+
+- **AR.js with Image Tracking + Location Based AR:**
+
+  - AFRAME version: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js
+
+  - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-nft.js
+
+- **AR.js with Marker Tracking + Location Based AR:**
+
+  - AFRAME version: https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js
+
+  - three.js version: https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar.js
+
+
+You can also import a specific version replacing `master` keyword with version tag:
+
+```html
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.1/aframe/build/aframe-ar-nft.js">
+```
+
+## Get started
+
+### 🖼 **Image Tracking**
+
+Please follow these simple steps:
+
+- Create a new project with the code below (or [open this live example](https://ar-js-org.github.io/AR.js/aframe/examples/image-tracking/nft/) and go directly to the last step)
+- Run it on a server
+- Open the website on your phone
+- Scan [this picture](https://raw.githubusercontent.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex-image-big.jpeg) to see content through the camera.
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+<style>
+  .arjs-loader {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .arjs-loader div {
+    text-align: center;
+    font-size: 1.25em;
+    color: white;
+  }
+</style>
+
+<body style="margin : 0px; overflow: hidden;">
+  <!-- minimal loader shown until image descriptors are loaded -->
+  <div class="arjs-loader">
+    <div>Loading, please wait...</div>
+  </div>
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: false;"
+  >
+    <!-- we use cors proxy to avoid cross-origin problems -->
+    <a-nft
+      type="nft"
+      url="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/trex-image/trex"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+    >
+      <a-entity
+        gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+        scale="5 5 5"
+        position="50 150 0"
+      >
+      </a-entity>
+    </a-nft>
+    <a-entity camera></a-entity>
+  </a-scene>
+</body>
+```
+
+### 🌍Location Based Example
+
+Please follow these simple steps:
+
+- Create a new project with the following snippet, and change `add-your-latitude` and `add-your-longitude` with your latitude and longitude, without the `<>`.
+- Run it on a server
+- Activate GPS on your phone and navigate to the example URL
+- Look around. You should see the text looking at you, appearing in the requested position, even if you look around and move.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>GeoAR.js demo</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+  </head>
+
+  <body style="margin: 0; overflow: hidden;">
+    <a-scene
+      vr-mode-ui="enabled: false"
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+    >
+      <a-text
+        value="This content will always face you."
+        look-at="[gps-camera]"
+        scale="120 120 120"
+        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
+      ></a-text>
+      <a-camera gps-camera rotation-reader> </a-camera>
+    </a-scene>
+  </body>
+</html>
+```
+
+### 🔲 Marker Based Example
+
+Please follow this simple steps:
+
+- Create a new project with the code below (or [open this live example](https://ar-js-org.github.io/AR.js/aframe/examples/marker-based/basic.html) and go directly to the last step)
+- Run it on a server
+- Open the website on your phone
+- Scan [this picture](https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png) to see content through the camera.
+
+```html
+<!DOCTYPE html>
+<html>
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <!-- we import arjs version without NFT but with marker + location based support -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <body style="margin : 0px; overflow: hidden;">
+        <a-scene embedded arjs>
+        <a-marker preset="hiro">
+            <a-entity
+            position="0 -1 0"
+            scale="0.05 0.05 0.05"
+            gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+            ></a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
+        </a-scene>
+    </body>
+</html>
+```
+
+Learn more on the [AR.js Official Documentation](https://ar-js-org.github.io/AR.js-Docs/).
+
+## Troubleshooting, feature requests, community
+
+**You can find a lot of help on the old [AR.js repositories issues](https://github.com/jeromeetienne/AR.js/issues). Please search on open/closed issues, you may find interesting stuff.**
+
+### Contributing
+
+From opening a bug report to creating a pull request: every contribution is
+appreciated and welcome. If you're planning to implement a new feature or change
+the api please create an issue first. This way we can ensure that your precious
+work is not in vain.
+
+### Issues
+
+If you are having configuration or setup problems, please post
+a question to [StackOverflow](https://stackoverflow.com/search?q=ar.js).
+You can also address the question to us in our [Gitter chatroom](https://gitter.im/AR-js/Lobby)
+
+**If you have discovered a bug or have a feature suggestion, feel free to create an issue on Github.**
+
+### Submitting Changes
+
+After getting some feedback, push to your fork and submit a pull request. We
+may suggest some changes or improvements or alternatives, but for small changes
+your pull request should be accepted quickly.
+
+Some things that will increase the chance that your pull request is accepted:
+
+* Follow the existing coding style
+* Write a [good commit message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+
+## Licenses
+
+It is **all open-source**! jsartoolkit5 is under LGPLv3 license and additional permission.
+And All my code in AR.js repository is under MIT license. :)
+
+For legal details, be sure to check [jsartoolkit5 license](https://github.com/artoolkitx/jsartoolkit5/blob/master/LICENSE.txt)
+and [AR.js license](https://github.com/AR-js-org/AR.js/blob/master/LICENSE).
+
+Full Changelog: [AR.js changelog](https://github.com/AR-js-org/AR.js/blob/master/CHANGELOG.md)
 
