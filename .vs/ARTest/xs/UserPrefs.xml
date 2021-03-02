@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{2479BDE7-26EA-A61A-8E37-48A4E236D674}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ARjs_Unity/Editor/ChangeImageTarget.cs">
+    <Files>
+      <File FileName="Assets/ARjs_Unity/Editor/ChangeImageTarget.cs" Line="23" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ARTest" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="ARjs_Unity" expanded="True">
+                <Node name="Editor" expanded="True">
+                  <Node name="ChangeImageTarget.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d1004241-38a9-495d-bdb1-885ad071be54" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
