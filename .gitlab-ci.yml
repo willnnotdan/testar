@@ -1,0 +1,7 @@
+pages:
+  script:
+  - mkdir public
+  - cp -r Assets/AR.js-master/aframe/* public/
+  artifacts:
+    paths:
+    - public
